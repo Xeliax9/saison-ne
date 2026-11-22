@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saison NE : manger local et de saison à Neuchâtel</title>
+<meta name="description" content="Ce qui pousse en Suisse ce mois-ci, une recette de saison chaque semaine et où acheter local dans le canton de Neuchâtel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="logo" href="#mois" aria-label="Saison NE, retour en haut">saison <span class="ne" aria-hidden="true">NE</span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#mois">Ce mois-ci</a>
+      <a href="#recette">Recette</a>
+      <a href="#calendrier">Calendrier</a>
+      <a href="#ou-acheter">Où acheter</a>
+    </nav>
+  </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+</header>
+
+<main id="contenu">
+
+  <!-- ===================== LE MOIS ===================== -->
+  <section class="hero" id="mois" aria-labelledby="month-title">
+    <div class="wrap">
+      <div class="hero-head">
+        <p class="week" id="week"></p>
+        <div class="month-arrows">
+          <button class="round-btn" id="prev-month" type="button" aria-label="Mois précédent">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="round-btn" id="next-month" type="button" aria-label="Mois suivant">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+      <h1 class="month-title" id="month-title" aria-live="polite">novembre</h1>
+
+      <div class="hero-mid">
+        <div>
+          <p class="hero-lead" id="hero-lead"></p>
+          <div class="chips" id="cat-chips" role="group" aria-label="Filtrer par catégorie"></div>
+        </div>
+        <div class="vedettes" id="vedettes" aria-label="Produits à découvrir ce mois-ci"></div>
+      </div>
+      <div class="sheet" id="sheet" aria-label="Produits de saison"></div>
+
+      <div class="legend">
+        <span><i aria-hidden="true"></i>Récolté ce mois-ci</span>
+        <span><i class="s" aria-hidden="true"></i>De garde : récolté en Suisse et conservé</span>
+      </div>
+
+      <div class="rail" id="rail" role="group" aria-label="Choisir un mois"></div>
+    </div>
+  </section>
+
+  <!-- ===================== RECETTE ===================== -->
+  <section class="block" id="recette" aria-labelledby="recette-h">
+    <div class="wrap">
+      <div class="block-head">
+        <h2 id="recette-h">Recette de la semaine</h2>
+        <p>Chaque lundi, une nouvelle idée avec ce qui pousse maintenant. Des recettes simples, avec les produits du calendrier et des lieux de vente de ce site.</p>
+      </div>
+      <div class="recipe" id="recipe"></div>
+    </div>
+  </section>
+
+  <!-- ===================== CALENDRIER ===================== -->
+  <section class="block mist" id="calendrier" aria-labelledby="cal-h">
+    <div class="wrap">
+      <div class="block-head">
+        <h2 id="cal-h">Le calendrier complet</h2>
+        <p>Les douze mois d’un coup d’œil, d’après le calendrier de l’Union maraîchère suisse. Touchez une ligne pour voir la fiche du produit.</p>
+      </div>
+      <div class="cal-tools">
+        <label class="search">
+          <span class="visually-hidden">Chercher un produit</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="cal-search" type="search" placeholder="Chercher un produit" autocomplete="off">
+        </label>
+        <div class="chips" id="cal-chips" role="group" aria-label="Filtrer le calendrier"></div>
+      </div>
+      <div class="cal-scroll">
+        <table class="cal" id="cal">
+          <caption class="visually-hidden">Calendrier des saisons des fruits et légumes suisses</caption>
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="cal-foot">
+        <div class="legend">
+          <span><i aria-hidden="true"></i>Récolté en Suisse</span>
+          <span><i class="s" aria-hidden="true"></i>De garde (stock suisse)</span>
+        </div>
+        <span>Légumes, salades, herbes : <a href="https://www.gemuese.ch/fr/calendrier-des-saisons">gemuese.ch</a>. Fruits : périodes indicatives.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OÙ ACHETER ===================== -->
+  <section class="block" id="ou-acheter" aria-labelledby="lieux-h">
+    <div class="wrap">
+      <div class="block-head">
+        <h2 id="lieux-h">Où acheter</h2>
+        <p>Marchés, self-services à la ferme, paniers livrés : une sélection d’adresses dans tout le canton. Choisissez votre commune pour voir les plus proches. Les horaires changent : vérifiez avant de vous déplacer.</p>
+      </div>
+      <div class="place-tools">
+        <label class="commune"><span>Près de chez moi</span><select id="commune"></select></label>
+        <div class="chips" id="place-chips" role="group" aria-label="Filtrer les lieux"></div>
+      </div>
+      <div class="places">
+        <div class="map-box">
+          <div id="map"></div>
+          <p class="map-note">Points placés au village. L’adresse exacte est dans la liste.</p>
+        </div>
+        <div>
+          <ul class="place-list" id="place-list"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h2>saison NE</h2>
+        <p>Un prototype du groupe 11 du CPNE (TIP 2026-2027). Il réunit au même endroit ce qu’il faut pour acheter local et de saison dans le canton de Neuchâtel : le calendrier, les lieux de vente et des recettes.</p>
+        <h3 style="margin-top:22px">Local, de saison : quelle différence ?</h3>
+        <p><strong>Local</strong> : cultivé ou transformé près de chez vous, ici surtout dans le canton de Neuchâtel. <strong>De saison</strong> : récolté pendant la période où il pousse naturellement. Un produit peut être l’un sans être l’autre : une tomate du canton en hiver vient souvent d’une serre chauffée.</p>
+        <p>Conception et code réalisés avec l’aide de l’IA Claude (Anthropic).</p>
+      </div>
+      <div>
+        <h3>Sources des données</h3>
+        <ul>
+          <li>Union maraîchère suisse, <a href="https://www.gemuese.ch/fr/calendrier-des-saisons">calendrier des saisons</a> et fiches des légumes (consultés le 6 novembre 2026).</li>
+          <li>Fruit-Union Suisse, <a href="https://www.swissfruit.ch">communiqués de saison</a> (fraises, cerises, pruneaux 2026). Les autres fruits sont indicatifs.</li>
+          <li>Loisirs.ch, dossier « Où acheter bio et local dans le canton de Neuchâtel ? », myfarm.ch, MySwitzerland et Jura &amp; Trois-Lacs pour les lieux et horaires.</li>
+          <li>Paysannes &amp; Paysans, <a href="https://www.paysanssuisses.ch/calendrier-des-saisons/">calendrier des saisons</a>, et <a href="https://www.wwf.ch/fr/guide-fruits-et-legumes">guide fruits et légumes du WWF</a>, pour comparaison.</li>
+          <li>Carte : limites communales et lacs de l’Office fédéral de la statistique / swisstopo, via le paquet swiss-maps.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">Les horaires et les périodes de récolte varient selon les années et la météo. Les informations sur les lieux sont à confirmer avec chaque producteur. Une erreur ? Signalez-la au groupe 11 du CPNE.</p>
+    <button type="button" class="anim-toggle" id="anim-toggle" aria-pressed="true"><i aria-hidden="true"></i>Animations</button>
+  </div>
+</footer>
+
+<dialog id="fiche" aria-labelledby="fiche-title"><div class="dlg" id="fiche-body"></div></dialog>
+
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- 1. Données (modifiables)  2. Code du site -->
+<script src="donnees/produits.js"></script>
+<script src="donnees/lieux.js"></script>
+<script src="donnees/recettes.js"></script>
+<script src="donnees/photos.js"></script>
+<script src="donnees/carte-neuchatel.js"></script>
+<script src="js/dessins.js"></script>
+<script src="js/outils.js"></script>
+<script src="js/accueil.js"></script>
+<script src="js/recette.js"></script>
+<script src="js/calendrier.js"></script>
+<script src="js/fiche.js"></script>
+<script src="js/carte.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
