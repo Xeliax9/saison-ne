@@ -41,7 +41,7 @@ function ouvrirFiche(id, origine) {
       }, h('strong', null, r.titre), h('span', null, `${r.temps} min, ${periode(r.mois)}`))))) : null,
       h('p', { class: 'src' }, p.slug ? h('a', { href: 'https://www.gemuese.ch/fr/especes-de-legumes/' + p.slug }, 'Fiche complète sur gemuese.ch') : 'Période indicative, à confirmer.'),
       (typeof CREDITS !== 'undefined' && CREDITS[p.id] && PHOTOS.has(p.id))
-        ? h('p', { class: 'credit' }, 'Photo : ', h('a', { href: CREDITS[p.id].url }, CREDITS[p.id].artist || 'Wikimedia Commons'), ', ' + (CREDITS[p.id].license || 'licence libre') + ', Wikimedia Commons')
+        ? h('p', { class: 'credit' }, 'Photo : ', h('a', { href: CREDITS[p.id].url }, CREDITS[p.id].auteur || 'Wikimedia Commons'), ', ' + (CREDITS[p.id].licence || 'licence libre') + ', Wikimedia Commons')
         : null));
 
   origineFiche = origine && origine.isConnected ? origine : null;
