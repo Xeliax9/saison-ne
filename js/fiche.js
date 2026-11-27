@@ -5,6 +5,46 @@
    4. Fiche produit
    --------------------------------------------------------------- */
 let origineFiche = null;
+
+/** Photos d'un produit : la principale (photos.js) puis celles de la galerie (galerie.js) */
+function photosDe(p) {
+  if (typeof PHOTOS === 'undefined' || !PHOTOS.has(p.id)) return [];
+  const extra = (typeof GALERIE !== 'undefined' && GALERIE[p.id]) || [];
+  return [{ src: 'photos/' + p.id + '.jpg', ...CREDITS[p.id] },
+    ...extra.map(g => ({ src: 'photos/' + g.fichier, ...g }))];
+}
+
+/** Ligne de crédit d'une photo (obligatoire pour les licences Wikimedia) */
+const creditPhoto = ph => ['Photo : ', h('a', { href: ph.url }, ph.auteur || 'Wikimedia Commons'),
+  ', ' + (ph.licence || 'licence libre') + ', Wikimedia Commons'];
+
+/** Galerie : les photos défilent au doigt (scroll-snap), avec flèches et points */
+function galerieFiche(p, photos, credit) {
+  const piste = h('div', { class: 'piste' }, photos.map((ph, k) =>
+    h('img', { src: ph.src, alt: k ? `${p.nom}, photo ${k + 1}` : '', decoding: 'async', draggable: 'false',
+      style: ph.cadrage ? 'object-position:' + ph.cadrage : null })));
+  const points = photos.map((_, k) => h('button', {
+    type: 'button', class: k ? null : 'actif', 'aria-label': `Photo ${k + 1} sur ${photos.length}`, onclick: () => aller(k),
+  }));
+  let i = 0;
+  function aller(k) {
+    k = (k + photos.length) % photos.length;
+    piste.scrollTo({ left: k * piste.clientWidth, behavior: REDUCE ? 'auto' : 'smooth' });
+  }
+  piste.addEventListener('scroll', () => {
+    const k = Math.round(piste.scrollLeft / Math.max(1, piste.clientWidth));
+    if (k === i || !photos[k]) return;
+    i = k;
+    points.forEach((b, j) => b.classList.toggle('actif', j === k));
+    credit.replaceChildren(...creditPhoto(photos[k]));
+  }, { passive: true });
+  const fleche = (sens, d) => h('button', { type: 'button', class: 'gal-fleche ' + sens, 'aria-label': sens === 'prec' ? 'Photo précédente' : 'Photo suivante', onclick: () => aller(i + (sens === 'prec' ? -1 : 1)) },
+    s('svg', { viewBox: '0 0 24 24', width: '18', height: '18', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.6', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' }, s('path', { d })));
+  return [h('span', { class: 'ill ill-fiche photo galerie' }, piste),
+    fleche('prec', 'M15 6l-6 6 6 6'), fleche('suiv', 'M9 6l6 6-6 6'),
+    h('div', { class: 'gal-points' }, points)];
+}
+
 function ouvrirFiche(id, origine) {
   const p = P[id]; if (!p) return;
   const dlg = $('#fiche'), body = $('#fiche-body');
@@ -18,12 +58,15 @@ function ouvrirFiche(id, origine) {
     const a = (k / 12) * Math.PI * 2, d = 120 + (k % 3) * 28;
     return h('i', { class: 'confetti', style: `--x:${(Math.cos(a) * d).toFixed(0)}px;--y:${(Math.sin(a) * d * 0.6).toFixed(0)}px;--s:${6 + (k % 4) * 3}px;--d:${200 + k * 18}ms;background:${k % 3 ? ILLUS.nuance(p.c, 0.3) : '#fff'}` });
   });
+  const photos = photosDe(p);
+  const credit = photos.length ? h('p', { class: 'credit' }, creditPhoto(photos[0])) : null;
+  const image = photos.length > 1 ? galerieFiche(p, photos, credit) : illu(p, 'ill-fiche');
   body.replaceChildren(
     h('button', { class: 'close', type: 'button', 'aria-label': 'Fermer', onclick: () => fermerFiche() },
       s('svg', { viewBox: '0 0 24 24', width: '18', height: '18', fill: 'none', stroke: 'currentColor', 'stroke-width': '2.4', 'stroke-linecap': 'round', 'aria-hidden': 'true' }, s('path', { d: 'M6 6l12 12M18 6L6 18' }))),
     h('div', { class: 'fiche-tete', style: `--c:${p.c};--fond:${ILLUS.nuance(p.c, 0.8)};--fond2:${ILLUS.nuance(p.c, 0.62)}` },
       h('span', { class: 'rond r1' }), h('span', { class: 'rond r2' }), h('span', { class: 'rond r3' }),
-      confettis, illu(p, 'ill-fiche')),
+      confettis, image),
     h('div', { class: 'fiche-corps' },
       h('p', { class: 'kind' }, CATEGORIES[p.cat].un),
       h('h2', { id: 'fiche-title', class: 'fiche-nom' }, p.nom),
@@ -40,9 +83,7 @@ function ouvrirFiche(id, origine) {
         }),
       }, h('strong', null, r.titre), h('span', null, `${r.temps} min, ${periode(r.mois)}`))))) : null,
       h('p', { class: 'src' }, p.slug ? h('a', { href: 'https://www.gemuese.ch/fr/especes-de-legumes/' + p.slug }, 'Fiche complète sur gemuese.ch') : 'Période indicative, à confirmer.'),
-      (typeof CREDITS !== 'undefined' && CREDITS[p.id] && PHOTOS.has(p.id))
-        ? h('p', { class: 'credit' }, 'Photo : ', h('a', { href: CREDITS[p.id].url }, CREDITS[p.id].auteur || 'Wikimedia Commons'), ', ' + (CREDITS[p.id].licence || 'licence libre') + ', Wikimedia Commons')
-        : null));
+      credit));
 
   origineFiche = origine && origine.isConnected ? origine : null;
   if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');

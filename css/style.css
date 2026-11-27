@@ -601,13 +601,27 @@ html.calme .vedette .ill svg, html.calme .illu .feuillage, html.calme .statut.f 
 /* Photos réelles (remplacent le dessin quand elles existent) */
 .ill.photo { border-radius: 50%; overflow: hidden; background: #fff; padding: 0; }
 .ill.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.fiche-tete:has(.photo) { height: 320px; }
+.fiche-tete:has(.photo) { height: auto; aspect-ratio: 3 / 2; }  /* bandeau 3:2 : on coupe moins la photo */
 .ill-fiche.photo { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; filter: none; z-index: 0; }
 .fiche-tete:has(.photo) .rond { display: none; }
 .fiche-tete:has(.photo)::after { content: ''; position: absolute; inset: auto 0 0; height: 70px; background: linear-gradient(transparent, rgba(0,0,0,.18)); }
 .fiche-tete .confetti { z-index: 2; }
-@media (max-width: 640px) { .fiche-tete:has(.photo) { height: 240px; } }
+
 .vedette .ill.photo { border: 5px solid #fff; }
 
 #fiche .credit { font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
 #fiche .credit a { color: inherit; }
+
+/* Galerie de la fiche : plusieurs photos qui défilent (doigt, flèches ou points) */
+.galerie .piste { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.galerie .piste::-webkit-scrollbar { display: none; }
+.galerie .piste img { flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always; }
+.gal-fleche { all: unset; box-sizing: border-box; cursor: pointer; position: absolute; top: 50%; z-index: 3; width: 40px; height: 40px; margin-top: -20px; border-radius: 50%; display: grid; place-items: center; color: var(--ink); background: rgba(255, 255, 255, .8); backdrop-filter: blur(4px); transition: transform .2s var(--ease-spring), background .15s; }
+.gal-fleche.prec { left: 14px; }
+.gal-fleche.suiv { right: 14px; }
+.gal-fleche:hover { background: #fff; transform: scale(1.08); }
+.gal-fleche:focus-visible, .gal-points button:focus-visible { outline: 3px solid var(--stone); outline-offset: 2px; }
+.gal-points { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; gap: 8px; }
+.gal-points button { all: unset; cursor: pointer; width: 9px; height: 9px; border-radius: 999px; background: rgba(255, 255, 255, .6); box-shadow: 0 1px 3px rgba(0, 0, 0, .25); transition: width .3s var(--ease-spring), background .2s; }
+.gal-points button.actif { width: 24px; background: #fff; }
+@media (hover: none) { .gal-fleche { display: none; } }

@@ -52,8 +52,17 @@ function illu(p, cls) {
   if (typeof PHOTOS !== 'undefined' && PHOTOS.has(p.id)) {
     box.classList.add('photo');
     const img = document.createElement('img');
-    img.src = 'photos/' + p.id + '.jpg'; img.alt = ''; img.decoding = 'async';
-    if (cls !== 'ill-fiche') img.loading = 'lazy';
+    const grande = 'photos/' + p.id + '.jpg';
+    img.alt = ''; img.decoding = 'async';
+    const cadrage = typeof CREDITS !== 'undefined' && CREDITS[p.id] && CREDITS[p.id].cadrage;
+    if (cadrage) img.style.objectPosition = cadrage;   // ex. '50% 80%' : le produit est en bas de la photo
+    if (cls === 'ill-fiche' || typeof VIGNETTES === 'undefined' || !VIGNETTES) img.src = grande;
+    else {
+      // Petites pastilles : vignette légère (photos/petites/), la grande photo en secours
+      img.loading = 'lazy';
+      img.onerror = () => { img.onerror = null; img.src = grande; };
+      img.src = 'photos/petites/' + p.id + '.jpg';
+    }
     box.appendChild(img);
   } else box.innerHTML = ILLUS.svg(p);
   return box;
