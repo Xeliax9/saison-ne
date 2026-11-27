@@ -24,7 +24,12 @@ Lu automatiquement par Claude Code au début de chaque session. Le tenir à jour
 - Toujours citer les sources (gemuese.ch, sites des producteurs, Wikimedia pour les photos) — utile aussi pour le rapport en APA.
 
 ## À vérifier / en cours
-- Photos : 84 photos Wikimedia choisies, rassemblées dans `saison-ne-photos.json` (Téléchargements d'Alex). Import : `python outils/importer_photos.py chemin/saison-ne-photos.json`.
+- Site en ligne : https://xeliax9.github.io/saison-ne/ (dépôt public github.com/Xeliax9/saison-ne). `docs/` (documents de cours) est exclu du dépôt.
+- Photos (27.11.2026) : les 83 photos importées (560 px, vieilles photos d'amateur) sont jugées **trop mauvaises** par le groupe. À refaire :
+  - 2 à 3 photos par produit (**minimum 2**, qui défilent dans la fiche), de Wikimedia Commons, en privilégiant les catégories « Quality images », « Featured pictures » et « Valued images ». L'original doit faire 2000 px ou plus ; on télécharge la miniature de 1600 px, en paysage, au style photo de marché ou de cuisine, appétissante et nette.
+  - Fichiers : `photos/<id>.jpg` (principale, crédit dans `donnees/photos.js`), `photos/<id>-2.jpg`, `-3.jpg` (crédits dans `donnees/galerie.js`, objet `GALERIE`), `photos/petites/<id>.jpg` (240 px pour les pastilles, puis mettre `VIGNETTES = true` dans galerie.js). Champ facultatif `cadrage` (object-position CSS) si le produit n'est pas centré.
+  - Le code de la galerie (flèches, points, glisser au doigt, crédit qui suit la photo) et le bandeau 3:2 sont déjà en place.
+  - Un premier essai a filtré les candidats (≥ 2000 px, licence libre) pour les 83 produits mais le tri visuel n'a pas été fait. Les fichiers étaient dans un dossier temporaire, à refaire si perdus.
 - Saisons des **fruits** indicatives : à vérifier avec le tableau SSN/WWF.
 - Deux écarts relevés avec gemuese.ch : courge et pois mange-tout.
 - Horaires des lieux de vente relevés le 6.11.2026 : à confirmer, notamment après la visite chez le maraîcher (pas encore faite fin novembre).
