@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+
+# Documents de cours (privés, pas pour le site public)
+docs/
